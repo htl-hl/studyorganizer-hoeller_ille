@@ -1,0 +1,40 @@
+CREATE TABLE Lehrer (
+    L_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Vorname VARCHAR(50),
+    Nachname VARCHAR(50),
+    Kuerzel VARCHAR(10) UNIQUE,
+    Status VARCHAR(20)
+);
+
+CREATE TABLE Faecher (
+    F_Name VARCHAR(50) PRIMARY KEY,
+    Beschreibung TEXT
+);
+
+CREATE TABLE Lehrer_Faecher (
+    L_ID INT,
+    F_Name VARCHAR(50),
+    PRIMARY KEY (L_ID, F_Name),
+    FOREIGN KEY (L_ID) REFERENCES Lehrer(L_ID) ON DELETE CASCADE,
+    FOREIGN KEY (F_Name) REFERENCES Faecher(F_Name) ON DELETE CASCADE
+);
+
+CREATE TABLE User (
+    U_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Pwd VARCHAR(255)
+);
+
+CREATE TABLE Hausaufgaben (
+    HU_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Titel VARCHAR(100),
+    Beschreibung TEXT,
+    Faelligkeitsdatum DATE,
+    Status VARCHAR(20),
+    F_Name VARCHAR(50),
+    U_ID INT,
+    L_ID INT,
+    FOREIGN KEY (F_Name) REFERENCES Faecher(F_Name),
+    FOREIGN KEY (U_ID) REFERENCES User(U_ID),
+    FOREIGN KEY (L_ID) REFERENCES Lehrer(L_ID)
+);
