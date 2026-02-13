@@ -8,15 +8,14 @@ CREATE TABLE Lehrer (
 
 CREATE TABLE Faecher (
     F_Name VARCHAR(50) PRIMARY KEY,
-    Beschreibung TEXT
 );
 
 CREATE TABLE Lehrer_Faecher (
     L_ID INT,
     F_Name VARCHAR(50),
     PRIMARY KEY (L_ID, F_Name),
-    FOREIGN KEY (L_ID) REFERENCES Lehrer(L_ID) ON DELETE CASCADE,
-    FOREIGN KEY (F_Name) REFERENCES Faecher(F_Name) ON DELETE CASCADE
+    FOREIGN KEY (L_ID) REFERENCES Lehrer(L_ID),
+    FOREIGN KEY (F_Name) REFERENCES Faecher(F_Name)
 );
 
 CREATE TABLE User (
