@@ -1,3 +1,4 @@
+
 CREATE TABLE Lehrer (
     L_ID INT PRIMARY KEY AUTO_INCREMENT,
     Vorname VARCHAR(50),
@@ -7,7 +8,7 @@ CREATE TABLE Lehrer (
 );
 
 CREATE TABLE Faecher (
-    F_Name VARCHAR(50) PRIMARY KEY,
+    F_Name VARCHAR(50) PRIMARY KEY
 );
 
 CREATE TABLE Lehrer_Faecher (
