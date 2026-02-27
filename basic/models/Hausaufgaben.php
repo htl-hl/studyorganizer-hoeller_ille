@@ -97,5 +97,14 @@ class Hausaufgaben extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['U_ID' => 'U_ID']);
     }
+    public function getLehrer()
+    {
+        return $this->hasOne(Lehrer::class, ['L_ID' => 'L_ID']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['U_ID' => 'U_ID']);
+    }
 
 }

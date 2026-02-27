@@ -35,8 +35,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'Faelligkeitsdatum',
             'Status',
             'F_Name',
-            'U_ID',
-            'L_ID',
+                [
+                        'attribute' => 'U_ID',
+                        'label' => 'User',
+                        'value' => function ($model) {
+                            return $model->user ? $model->user->Name : 'Nicht zugewiesen';
+                        },
+                ],
+                [
+                        'attribute' => 'L_ID',
+                        'label' => 'Lehrer',
+                        'value' => function ($model) {
+                            return $model->lehrer ? $model->lehrer->Nachname : 'Nicht zugewiesen';
+                        },
+                ],
         ],
     ]) ?>
 
