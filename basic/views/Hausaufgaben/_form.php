@@ -18,13 +18,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Faelligkeitsdatum')->textInput() ?>
 
-    <?= $form->field($model, 'Status')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Status')->dropDownList([ 'Open' => 'Open', 'Closed' => 'Closed']) ?>
 
-    <?= $form->field($model, 'F_Name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'F_Name')->dropDownList($dropdownFaecher, ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'U_ID')->textInput() ?>
+    <?= $form->field($model, 'U_ID')->dropDownList($dropdownUser, ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'L_ID')->textInput() ?>
+    <?= $form->field($model, 'L_ID')->dropDownList($dropdownLehrer, ['prompt' => '']) ?>
+
+
+    <!--    --><?php //= $form->field($model, 'L_ID')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

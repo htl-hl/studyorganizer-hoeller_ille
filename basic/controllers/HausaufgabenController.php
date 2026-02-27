@@ -2,8 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Faecher;
 use app\models\Hausaufgaben;
 use app\models\HausaufgabenSearch;
+use app\models\Lehrer;
+use app\models\User;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,7 +71,24 @@ class HausaufgabenController extends Controller
      */
     public function actionCreate()
     {
+        $hausaufgaben = Hausaufgaben::find()->all();
         $model = new Hausaufgaben();
+        $lehrer = Lehrer::find()->all();
+        $user = User::find()->all();
+        $faecher = Faecher::find()->all();
+
+        foreach ($lehrer as $le) {
+            $array[$le->L_ID] = $le->Nachname;
+        }
+
+        foreach ($user as $u) {
+            $arrayUser[$u->U_ID] = $u->Name;
+        }
+
+        $dropdownLehrer = ArrayHelper::map($lehrer, 'L_ID', 'Nachname');
+        $dropdownUser = ArrayHelper::map($user, 'U_ID', 'Name');
+        $dropdownFaecher = ArrayHelper::map($faecher, 'F_Name', 'F_Name');
+
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -79,6 +100,10 @@ class HausaufgabenController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'dropdownLehrer' => $dropdownLehrer,
+            'dropdownUser' => $dropdownUser,
+            'dropdownFaecher' => $dropdownFaecher,
+            'hausaufgaben' => $hausaufgaben,
         ]);
     }
 

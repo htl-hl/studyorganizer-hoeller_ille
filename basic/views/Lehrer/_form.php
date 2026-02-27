@@ -18,7 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Kuerzel')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Status')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Status')->dropDownList([ 'Available' => 'Available', 'Unavailable' => 'Unavailable']) ?>
+
+<!--    --><?php //= $form->field($model, 'Status')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

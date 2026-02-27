@@ -4,6 +4,10 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\Hausaufgaben $model */
+/** @var  $dropdownLehrer */
+/** @var  $dropdownUser */
+/** @var  $dropdownFaecher */
+
 
 $this->title = 'Create Hausaufgaben';
 $this->params['breadcrumbs'][] = ['label' => 'Hausaufgabens', 'url' => ['index']];
@@ -15,6 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+            'dropdownLehrer' => $dropdownLehrer,
+            'dropdownUser' => $dropdownUser,
+        'dropdownFaecher' => $dropdownFaecher,
     ]) ?>
 
 </div>
