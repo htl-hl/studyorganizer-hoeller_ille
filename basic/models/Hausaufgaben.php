@@ -62,9 +62,9 @@ class Hausaufgaben extends \yii\db\ActiveRecord
             'Beschreibung' => 'Beschreibung',
             'Faelligkeitsdatum' => 'Faelligkeitsdatum',
             'Status' => 'Status',
-            'F_Name' => 'F Name',
-            'U_ID' => 'U ID',
-            'L_ID' => 'L ID',
+            'F_Name' => 'Fach',
+            'U_ID' => 'User',
+            'L_ID' => 'Lehrer',
         ];
     }
 
