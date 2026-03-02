@@ -31,13 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'U_ID',
             'Name',
-            'Pwd',
+                [
+                        'attribute' => 'Pwd',
+                        'value' => function () {
+                            return '*******';
+                        }
+                ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, User $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'U_ID' => $model->U_ID]);
                  }
             ],
+
         ],
     ]); ?>
 
