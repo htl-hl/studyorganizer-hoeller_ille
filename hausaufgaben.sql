@@ -1,3 +1,5 @@
+use hausaufgaben;
+
 
 CREATE TABLE Lehrer (
     L_ID INT PRIMARY KEY AUTO_INCREMENT,
