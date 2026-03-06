@@ -6,7 +6,21 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'on beforeAction' => function ($event) {
+        $allowed = [
+            'site/login',
+            'site/error',
+            'user/create',
+        ];
+
+        $route = Yii::$app->requestedRoute;
+
+        if (Yii::$app->user->isGuest && !in_array($route, $allowed)) {
+            return Yii::$app->getResponse()->redirect(['site/login']);
+        }
+    },
     'bootstrap' => ['log'],
+    'defaultRoute' => 'site/login',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',

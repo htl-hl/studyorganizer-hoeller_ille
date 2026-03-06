@@ -93,12 +93,16 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/index']);  // ← statt goHome()
+            return $this->redirect(['/site/index']);
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect(['/site/index']);  // ← statt goBack()
+            if (Yii::$app->user->identity->isAdmin()) {
+                return $this->redirect(['/user/index']);
+            } else {
+                return $this->redirect(['/site/index']);
+            }
         }
 
         $model->password = '';

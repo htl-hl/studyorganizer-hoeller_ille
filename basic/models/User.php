@@ -34,6 +34,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['Name', 'Pwd'], 'default', 'value' => null],
             [['Name'], 'string', 'max' => 100],
             [['Pwd'], 'string', 'max' => 255],
+            [['is_admin'], 'integer'],
         ];
     }
 
@@ -89,5 +90,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
     public function getUsername(){
         return $this->Name;
+    }
+    public function isAdmin() {
+        return $this->is_admin == 1;
     }
 }
