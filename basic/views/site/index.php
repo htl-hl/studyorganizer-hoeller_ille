@@ -1,14 +1,14 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var app\models\Hausaufgaben[] $offeneAufgaben */
-/** @var app\models\Hausaufgaben[] $erledigteAufgaben */
+/** @var app\models\Hausaufgaben[] $openTasks */
+/** @var app\models\Hausaufgaben[] $doneTasks */
 
 use yii\helpers\Html;
 
 $this->title = 'Dashboard';
 
-// Hilfsfunktion: Status → Badge CSS-Klasse + Label
+// hilft mit den farben und badges von den verschiedenen tasks
 function statusInfo($status) {
     switch (strtolower(trim($status ?? ''))) {
         case 'erledigt': return ['class' => 'badge-erledigt', 'label' => '✓ Erledigt'];
@@ -19,7 +19,7 @@ function statusInfo($status) {
     }
 }
 
-// Hilfsfunktion: Status → data-status (linke Border-Farbe)
+// stellt die farbe um je nach offene oder fertige task
 function statusAttr($status) {
     switch (strtolower(trim($status ?? ''))) {
         case 'erledigt': return 'erledigt';
@@ -28,32 +28,31 @@ function statusAttr($status) {
     }
 }
 
-// Alle Fächer für den Filter sammeln
-$alleFaecher = array_unique(array_filter(array_map(
+// das ist für den filter
+$allSubjects = array_unique(array_filter(array_map(
         fn($a) => $a->F_Name,
-        array_merge($offeneAufgaben, $erledigteAufgaben)
+        array_merge($openTasks, $doneTasks)
 )));
 ?>
 
-<!-- Dashboard Hero -->
 <div class="dash-hero">
     <h1 class="dash-greeting">
         Hallo, <em><?= Html::encode(Yii::$app->user->identity->Name ?? 'Gast') ?>.</em>
     </h1>
     <div class="stat-pills">
-        <div class="pill"><strong><?= count($offeneAufgaben) ?></strong> offen</div>
-        <div class="pill"><strong><?= count($erledigteAufgaben) ?></strong> erledigt</div>
+        <div class="pill"><strong><?= count($openTasks) ?></strong> offen</div>
+        <div class="pill"><strong><?= count($doneTasks) ?></strong> erledigt</div>
         <?php
         // Nächste Abgabe anzeigen
-        if (!empty($offeneAufgaben) && $offeneAufgaben[0]->Faelligkeitsdatum) {
-            $datum = date('d. M', strtotime($offeneAufgaben[0]->Faelligkeitsdatum));
+        if (!empty($openTasks) && $openTasks[0]->Faelligkeitsdatum) {
+            $datum = date('d. M', strtotime($openTasks[0]->Faelligkeitsdatum));
             echo '<div class="pill"><strong>' . $datum . '</strong> nächste Abgabe</div>';
         }
         ?>
     </div>
 </div>
 
-<!-- Such- und Filterleiste -->
+<!-- Searchbar und Navbar oder so -->
 <div class="filter-bar">
     <input
             type="text"
@@ -64,55 +63,55 @@ $alleFaecher = array_unique(array_filter(array_map(
     >
     <select id="dash-fach" onchange="dashFilter()">
         <option value="">Fach: Alle</option>
-        <?php foreach ($alleFaecher as $fach): ?>
-            <option value="<?= Html::encode($fach) ?>"><?= Html::encode($fach) ?></option>
+        <?php foreach ($allSubjects as $subject): ?>
+            <option value="<?= Html::encode($subject) ?>"><?= Html::encode($subject) ?></option>
         <?php endforeach ?>
     </select>
     <?= Html::a('+ Neue Aufgabe', ['/hausaufgaben/create'], ['class' => 'btn btn-primary btn-sm']) ?>
 </div>
 
-<!-- ── Offene Aufgaben ─────────────────────── -->
+<!-- noch offene aufgaben -->
 <div class="section-header">
-    <h2 class="section-title">Offene Aufgaben <small><?= count($offeneAufgaben) ?></small></h2>
+    <h2 class="section-title">Offene Aufgaben <small><?= count($openTasks) ?></small></h2>
 </div>
 
 <div id="offene-liste">
-    <?php if (empty($offeneAufgaben)): ?>
+    <?php if (empty($openTasks)): ?>
         <div style="color:var(--text-muted);font-size:.9rem;padding:.75rem 0">
             Keine offenen Aufgaben — gut gemacht! 🎉
         </div>
     <?php else: ?>
-        <?php foreach ($offeneAufgaben as $aufgabe): ?>
-            <?php $info = statusInfo($aufgabe->Status); ?>
+        <?php foreach ($openTasks as $task): ?>
+            <?php $info = statusInfo($task->Status); ?>
             <div class="task-card"
-                 data-status="<?= statusAttr($aufgabe->Status) ?>"
-                 data-title="<?= Html::encode(strtolower($aufgabe->Titel)) ?>"
-                 data-fach="<?= Html::encode($aufgabe->F_Name) ?>">
+                 data-status="<?= statusAttr($task->Status) ?>"
+                 data-title="<?= Html::encode(strtolower($task->Titel)) ?>"
+                 data-fach="<?= Html::encode($task->F_Name) ?>">
 
-                <span class="task-fach"><?= Html::encode($aufgabe->F_Name ?? '—') ?></span>
+                <span class="task-fach"><?= Html::encode($task->F_Name ?? '—') ?></span>
 
                 <div class="task-body">
-                    <div class="task-title"><?= Html::encode($aufgabe->Titel) ?></div>
-                    <?php if ($aufgabe->Beschreibung): ?>
-                        <div class="task-desc"><?= Html::encode($aufgabe->Beschreibung) ?></div>
+                    <div class="task-title"><?= Html::encode($task->Titel) ?></div>
+                    <?php if ($task->Beschreibung): ?>
+                        <div class="task-desc"><?= Html::encode($task->Beschreibung) ?></div>
                     <?php endif ?>
                     <div class="task-meta">
-                        <?php if ($aufgabe->lehrer): ?>
-                            <span>von <?= Html::encode($aufgabe->lehrer->Nachname) ?></span>
+                        <?php if ($task->lehrer): ?>
+                            <span>von <?= Html::encode($task->lehrer->Nachname) ?></span>
                             <span>·</span>
                         <?php endif ?>
-                        <?php if ($aufgabe->Faelligkeitsdatum): ?>
-                            <span>Fällig: <?= date('d.m.Y', strtotime($aufgabe->Faelligkeitsdatum)) ?></span>
+                        <?php if ($task->Faelligkeitsdatum): ?>
+                            <span>Fällig: <?= date('d.m.Y', strtotime($task->Faelligkeitsdatum)) ?></span>
                         <?php endif ?>
                     </div>
                 </div>
 
                 <div class="task-right">
-                    <?php if ($aufgabe->Faelligkeitsdatum): ?>
-                        <span class="task-date"><?= date('d. M', strtotime($aufgabe->Faelligkeitsdatum)) ?></span>
+                    <?php if ($task->Faelligkeitsdatum): ?>
+                        <span class="task-date"><?= date('d. M', strtotime($task->Faelligkeitsdatum)) ?></span>
                     <?php endif ?>
                     <span class="badge <?= $info['class'] ?>"><?= $info['label'] ?></span>
-                    <?= Html::a('Bearbeiten', ['/hausaufgaben/update', 'HU_ID' => $aufgabe->HU_ID], ['class' => 'btn btn-secondary btn-sm']) ?>
+                    <?= Html::a('Bearbeiten', ['/hausaufgaben/update', 'HU_ID' => $task->HU_ID], ['class' => 'btn btn-secondary btn-sm']) ?>
                 </div>
             </div>
         <?php endforeach ?>
@@ -121,48 +120,48 @@ $alleFaecher = array_unique(array_filter(array_map(
 
 <hr class="divider">
 
-<!-- ── Erledigte Aufgaben ──────────────────── -->
+<!-- done tasks -->
 <div class="section-header">
-    <h2 class="section-title">Erledigt <small><?= count($erledigteAufgaben) ?></small></h2>
+    <h2 class="section-title">Erledigt <small><?= count($doneTasks) ?></small></h2>
 </div>
 
 <div id="erledigte-liste">
-    <?php if (empty($erledigteAufgaben)): ?>
+    <?php if (empty($doneTasks)): ?>
         <div style="color:var(--text-muted);font-size:.9rem;padding:.75rem 0">
             Noch keine erledigten Aufgaben.
         </div>
     <?php else: ?>
-        <?php foreach ($erledigteAufgaben as $aufgabe): ?>
+        <?php foreach ($doneTasks as $task): ?>
             <div class="task-card"
                  data-status="erledigt"
-                 data-title="<?= Html::encode(strtolower($aufgabe->Titel)) ?>"
-                 data-fach="<?= Html::encode($aufgabe->F_Name) ?>"
+                 data-title="<?= Html::encode(strtolower($task->Titel)) ?>"
+                 data-fach="<?= Html::encode($task->F_Name) ?>"
                  style="opacity:.6">
 
-                <span class="task-fach"><?= Html::encode($aufgabe->F_Name ?? '—') ?></span>
+                <span class="task-fach"><?= Html::encode($task->F_Name ?? '—') ?></span>
 
                 <div class="task-body">
-                    <div class="task-title"><?= Html::encode($aufgabe->Titel) ?></div>
-                    <?php if ($aufgabe->Beschreibung): ?>
-                        <div class="task-desc"><?= Html::encode($aufgabe->Beschreibung) ?></div>
+                    <div class="task-title"><?= Html::encode($task->Titel) ?></div>
+                    <?php if ($task->Beschreibung): ?>
+                        <div class="task-desc"><?= Html::encode($task->Beschreibung) ?></div>
                     <?php endif ?>
                     <div class="task-meta">
-                        <?php if ($aufgabe->Faelligkeitsdatum): ?>
-                            <span>Fällig: <?= date('d.m.Y', strtotime($aufgabe->Faelligkeitsdatum)) ?></span>
+                        <?php if ($task->Faelligkeitsdatum): ?>
+                            <span>Fällig: <?= date('d.m.Y', strtotime($task->Faelligkeitsdatum)) ?></span>
                         <?php endif ?>
                     </div>
                 </div>
 
                 <div class="task-right">
                     <span class="badge badge-erledigt">✓ Erledigt</span>
-                    <?= Html::a('Ansehen', ['/hausaufgaben/view', 'HU_ID' => $aufgabe->HU_ID], ['class' => 'btn btn-secondary btn-sm']) ?>
+                    <?= Html::a('Ansehen', ['/hausaufgaben/view', 'HU_ID' => $task->HU_ID], ['class' => 'btn btn-secondary btn-sm']) ?>
                 </div>
             </div>
         <?php endforeach ?>
     <?php endif ?>
 </div>
 
-<!-- ── Live-Filter JS ─────────────────────── -->
+<!-- bissl js für an live filter -->
 <script>
     function dashFilter() {
         const search = document.getElementById('dash-search').value.toLowerCase();

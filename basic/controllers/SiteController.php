@@ -69,19 +69,19 @@ class SiteController extends Controller
             $query->where(['U_ID' => $userId]);
         }
 
-        $offeneAufgaben = (clone $query)
+        $openTasks = (clone $query)
             ->andWhere(['!=', 'Status', 'erledigt'])
             ->orderBy(['Faelligkeitsdatum' => SORT_ASC])
             ->all();
 
-        $erledigteAufgaben = (clone $query)
+        $doneTasks = (clone $query)
             ->andWhere(['Status' => 'erledigt'])
             ->orderBy(['Faelligkeitsdatum' => SORT_DESC])
             ->all();
 
         return $this->render('index', [
-            'offeneAufgaben'    => $offeneAufgaben,
-            'erledigteAufgaben' => $erledigteAufgaben,
+            'openTasks'    => $openTasks,
+            'doneTasks' => $doneTasks,
         ]);
     }
 
