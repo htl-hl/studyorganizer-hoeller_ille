@@ -5,83 +5,77 @@
 
 use app\assets\AppAsset;
 use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use yii\helpers\Html;
 
 AppAsset::register($this);
 
+$this->registerCssFile('@web/css/hausaufgaben.css');
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
-$this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
-<head>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>">
+    <head>
+        <title><?= Html::encode($this->title) ?> — HausaufgabenManager</title>
+        <?php $this->head() ?>
+    </head>
+    <body>
+    <?php $this->beginBody() ?>
 
-<header id="header">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label'=> 'Hausaufgaben', 'url' => ['hausaufgaben/index']],
-            ['label' => 'Fächer', 'url' => ['faecher/index']],
-            ['label'=> 'Lehrer', 'url' => ['lehrer/index']],
-            ['label'=> 'Users', 'url' => ['user/index']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
-    ]);
-    NavBar::end();
-    ?>
-</header>
+    <nav class="navbar">
+        <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
+            Hausaufgaben<em>Manager</em>
+        </a>
 
-<main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
+        <ul class="navbar-nav">
+            <li><?= Html::a('Dashboard', ['/site/index'], ['class' => $this->context->route === 'site/index' ? 'active' : '']) ?></li>
+            <li><?= Html::a('Hausaufgaben', ['/hausaufgaben/index'], ['class' => str_starts_with($this->context->route, 'hausaufgaben') ? 'active' : '']) ?></li>
+            <li><?= Html::a('Fächer', ['/faecher/index'], ['class' => str_starts_with($this->context->route, 'faecher') ? 'active' : '']) ?></li>
+            <li><?= Html::a('Lehrer', ['/lehrer/index'], ['class' => str_starts_with($this->context->route, 'lehrer') ? 'active' : '']) ?></li>
+            <li><?= Html::a('Users', ['/user/index'], ['class' => str_starts_with($this->context->route, 'user') ? 'active' : '']) ?></li>
+        </ul>
+
+        <div class="navbar-greeting">
+            <?php if (Yii::$app->user->isGuest): ?>
+                <?= Html::a('Login', ['/site/login']) ?>
+            <?php else: ?>
+                Hallo, <strong><?= Html::encode(Yii::$app->user->identity->username) ?></strong>
+                &nbsp;·&nbsp;
+                <?php
+                echo Html::beginForm(['/site/logout'], 'post', ['style' => 'display:inline']);
+                echo Html::submitButton('Abmelden', ['style' => 'background:none;border:none;cursor:pointer;color:var(--text-muted);font-family:inherit;font-size:.82rem;padding:0']);
+                echo Html::endForm();
+                ?>
+            <?php endif ?>
+        </div>
+    </nav>
+
+    <div style="padding: 2rem 2.5rem; max-width: 1060px;">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <ul class="breadcrumb">
+                <?php foreach ($this->params['breadcrumbs'] as $i => $crumb): ?>
+                    <?php if (is_array($crumb)): ?>
+                        <li><?= Html::a(Html::encode($crumb['label']), $crumb['url']) ?></li>
+                    <?php else: ?>
+                        <li><?= Html::encode($crumb) ?></li>
+                    <?php endif ?>
+                <?php endforeach ?>
+            </ul>
         <?php endif ?>
+
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
-</main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
-    <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-        </div>
-    </div>
-</footer>
+    <footer style="border-top:1px solid var(--border);padding:1.25rem 2.5rem;margin-top:3rem;font-size:.78rem;color:var(--text-muted);display:flex;justify-content:space-between;">
+        <span>&copy; <?= date('Y') ?> HausaufgabenManager</span>
+        <span><?= Yii::powered() ?></span>
+    </footer>
 
-<?php $this->endBody() ?>
-</body>
-</html>
+    <?php $this->endBody() ?>
+    </body>
+    </html>
 <?php $this->endPage() ?>
