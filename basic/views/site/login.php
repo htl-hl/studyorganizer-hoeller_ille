@@ -59,7 +59,7 @@ $this->title = 'Login';
         <?php ActiveForm::end(); ?>
 
         <div class="login-footer">
-            Noch kein Konto? <?= Html::a('Registrieren', ['/site/register']) ?>
+            Noch kein Konto? <?= Html::a('Registrieren', ['/user/create']) ?>
         </div>
     </div>
 </div>
