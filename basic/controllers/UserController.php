@@ -7,6 +7,7 @@ use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -70,8 +71,15 @@ class UserController extends Controller
         $model = new User();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'U_ID' => $model->U_ID]);
+            if ($model->load($this->request->post())) {
+
+                if (!empty($model->Pwd)) {
+                    $model->Pwd = \Yii::$app->security->generatePasswordHash($model->Pwd);
+                }
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'U_ID' => $model->U_ID]);
+                }
             }
         } else {
             $model->loadDefaultValues();

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface; // WICHTIG: Das Interface importieren
 
 /**
  * This is the model class for table "User".
@@ -13,10 +15,8 @@ use Yii;
  *
  * @property Hausaufgaben[] $hausaufgabens
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
-
-
     /**
      * {@inheritdoc}
      */
@@ -49,6 +49,35 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return null;
+    }
+    public function getId()
+    {
+        return $this->U_ID;
+    }
+    public function getAuthKey()
+    {
+        return null;
+    }
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
+    }
+    public static function findByUsername($username)
+    {
+        return static::findOne(['Name' => $username]);
+    }
+    public function validatePassword($password) {
+        return Yii::$app->security->validatePassword($password, $this->Pwd);
+    }
+
     /**
      * Gets query for [[Hausaufgabens]].
      *
@@ -58,5 +87,7 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Hausaufgaben::class, ['U_ID' => 'U_ID']);
     }
-
+    public function getUsername(){
+        return $this->Name;
+    }
 }
