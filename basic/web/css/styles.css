@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
+/* base farben für die page */
 :root {
     --bg: #F7F5F0;
     --surface: #FFFFFF;
