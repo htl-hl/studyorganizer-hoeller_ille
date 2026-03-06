@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Hausaufgaben;
 
 class SiteController extends Controller
 {
@@ -55,13 +56,33 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays dashboard homepage.
      *
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $userId = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
+
+        $query = Hausaufgaben::find();
+        if ($userId) {
+            $query->where(['U_ID' => $userId]);
+        }
+
+        $openTasks = (clone $query)
+            ->andWhere(['!=', 'Status', 'erledigt'])
+            ->orderBy(['Faelligkeitsdatum' => SORT_ASC])
+            ->all();
+
+        $doneTasks = (clone $query)
+            ->andWhere(['Status' => 'erledigt'])
+            ->orderBy(['Faelligkeitsdatum' => SORT_DESC])
+            ->all();
+
+        return $this->render('index', [
+            'openTasks'    => $openTasks,
+            'doneTasks' => $doneTasks,
+        ]);
     }
 
     /**
@@ -72,12 +93,12 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['/site/index']);  // ← statt goHome()
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['/site/index']);  // ← statt goBack()
         }
 
         $model->password = '';
@@ -108,7 +129,6 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
             return $this->refresh();
         }
         return $this->render('contact', [
