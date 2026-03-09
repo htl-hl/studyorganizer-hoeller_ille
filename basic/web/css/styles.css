@@ -1,43 +1,43 @@
-/* ============================================
-   HAUSAUFGABEN MANAGER — Design System
-   Aesthetic: Clean Academic / Warm Minimal
-   Fonts: Fraunces (display) + DM Sans (body)
-   ============================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-/* ── Variables ────────────────────────────── */
+/* base farben für die page */
 :root {
-    --bg:          #F7F5F0;
-    --surface:     #FFFFFF;
-    --surface-2:   #F0EDE6;
-    --border:      #E2DDD5;
-    --text:        #1A1714;
-    --text-muted:  #7A7168;
-    --accent:      #2D5016;       /* deep forest green */
-    --accent-light:#EBF2E3;
-    --danger:      #C0392B;
-    --danger-light:#FAEAE8;
-    --warn:        #B8860B;
-    --warn-light:  #FDF6E3;
-    --success:     #2D5016;
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --surface-2: #F0EDE6;
+    --border: #E2DDD5;
+    --text: #1A1714;
+    --text-muted: #7A7168;
+    --accent: #2D5016;
+    --accent-light: #EBF2E3;
+    --danger: #C0392B;
+    --danger-light: #FAEAE8;
+    --warn: #B8860B;
+    --warn-light: #FDF6E3;
+    --success: #2D5016;
     --tag-open-bg: #FDF6E3;
     --tag-open-fg: #B8860B;
     --tag-done-bg: #EBF2E3;
     --tag-done-fg: #2D5016;
-    --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-    --shadow-md:   0 4px 12px rgba(0,0,0,.08);
-    --shadow-lg:   0 12px 32px rgba(0,0,0,.10);
-    --radius:      10px;
-    --radius-lg:   16px;
-    --radius-sm:   6px;
-    --transition:  .18s ease;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, .08);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, .10);
+    --radius: 10px;
+    --radius-lg: 16px;
+    --radius-sm: 6px;
+    --transition: .18s ease;
 }
 
-/* ── Reset & Base ─────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
 
 body {
     font-family: 'DM Sans', sans-serif;
@@ -55,10 +55,16 @@ h1, h2, h3, h4 {
     letter-spacing: -.01em;
 }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
 
-/* ── Layout ───────────────────────────────── */
+a:hover {
+    text-decoration: underline;
+}
+
+/* page layout */
 .page-wrapper {
     display: flex;
     min-height: 100vh;
@@ -70,7 +76,7 @@ a:hover { text-decoration: underline; }
     max-width: 1100px;
 }
 
-/* ── Navbar ───────────────────────────────── */
+/* navbar */
 .navbar {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -135,7 +141,7 @@ a:hover { text-decoration: underline; }
     font-weight: 600;
 }
 
-/* ── Sidebar (Admin) ──────────────────────── */
+/* sidebar beim admin */
 .sidebar {
     width: 220px;
     background: var(--surface);
@@ -186,7 +192,7 @@ a:hover { text-decoration: underline; }
     opacity: .6;
 }
 
-/* ── Cards ────────────────────────────────── */
+/* cards */
 .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -208,7 +214,7 @@ a:hover { text-decoration: underline; }
     font-weight: 400;
 }
 
-/* ── Aufgaben Cards (Dashboard) ───────────── */
+/* aufgaben cards formatierung */
 .task-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -302,12 +308,20 @@ a:hover { text-decoration: underline; }
     color: var(--text-muted);
 }
 
-/* Status Indicators (farbige linke Border) */
-.task-card[data-status="offen"]    { border-left: 3px solid var(--warn); }
-.task-card[data-status="erledigt"] { border-left: 3px solid var(--accent); }
-.task-card[data-status="neu"]      { border-left: 3px solid #5B8DD9; }
+/* der linke status einer card in farbe */
+.task-card[data-status="offen"] {
+    border-left: 3px solid var(--warn);
+}
 
-/* ── Status Badge ─────────────────────────── */
+.task-card[data-status="erledigt"] {
+    border-left: 3px solid var(--accent);
+}
+
+.task-card[data-status="neu"] {
+    border-left: 3px solid #5B8DD9;
+}
+
+/* status farb anzeige */
 .badge {
     display: inline-block;
     font-size: .72rem;
@@ -318,11 +332,22 @@ a:hover { text-decoration: underline; }
     letter-spacing: .04em;
 }
 
-.badge-offen    { background: var(--tag-open-bg); color: var(--tag-open-fg); }
-.badge-erledigt { background: var(--tag-done-bg); color: var(--tag-done-fg); }
-.badge-rot      { background: var(--danger-light); color: var(--danger); }
+.badge-offen {
+    background: var(--tag-open-bg);
+    color: var(--tag-open-fg);
+}
 
-/* ── Section Header ───────────────────────── */
+.badge-erledigt {
+    background: var(--tag-done-bg);
+    color: var(--tag-done-fg);
+}
+
+.badge-rot {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+/* unterheader */
 .section-header {
     display: flex;
     align-items: baseline;
@@ -342,14 +367,14 @@ a:hover { text-decoration: underline; }
     margin-left: .5rem;
 }
 
-/* ── Divider ──────────────────────────────── */
+/* divider für formatierung */
 .divider {
     border: none;
     border-top: 1px solid var(--border);
     margin: 1.5rem 0;
 }
 
-/* ── Buttons ──────────────────────────────── */
+/* button formatierungen */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -366,13 +391,16 @@ a:hover { text-decoration: underline; }
     text-decoration: none;
 }
 
-.btn:hover { text-decoration: none; }
+.btn:hover {
+    text-decoration: none;
+}
 
 .btn-primary {
     background: var(--accent);
     color: #fff;
     border-color: var(--accent);
 }
+
 .btn-primary:hover {
     background: #3a6820;
     border-color: #3a6820;
@@ -384,6 +412,7 @@ a:hover { text-decoration: underline; }
     color: var(--text);
     border-color: var(--border);
 }
+
 .btn-secondary:hover {
     background: var(--surface-2);
     color: var(--text);
@@ -394,6 +423,7 @@ a:hover { text-decoration: underline; }
     color: var(--danger);
     border-color: #EFC8C4;
 }
+
 .btn-danger:hover {
     background: var(--danger);
     color: #fff;
@@ -411,7 +441,6 @@ a:hover { text-decoration: underline; }
     padding: .35rem .75rem;
 }
 
-/* ── Forms ────────────────────────────────── */
 .form-group {
     margin-bottom: 1.25rem;
 }
@@ -449,10 +478,13 @@ select,
 input:focus, textarea:focus, select:focus,
 .form-control:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(45,80,22,.1);
+    box-shadow: 0 0 0 3px rgba(45, 80, 22, .1);
 }
 
-textarea { resize: vertical; min-height: 90px; }
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
 
 select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A7168' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -461,7 +493,7 @@ select {
     padding-right: 2.25rem;
 }
 
-/* ── Search & Filter Bar ──────────────────── */
+/* searchbar und filter */
 .filter-bar {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -486,7 +518,7 @@ select {
     min-width: 130px;
 }
 
-/* ── Login Page ───────────────────────────── */
+/* login */
 .login-page {
     min-height: 100vh;
     background: var(--bg);
@@ -527,7 +559,6 @@ select {
     margin-bottom: 2rem;
 }
 
-/* ── Dashboard Hero ───────────────────────── */
 .dashboard-hero {
     display: flex;
     align-items: baseline;
@@ -563,9 +594,12 @@ select {
     color: var(--text-muted);
 }
 
-.stat-pill strong { color: var(--text); font-weight: 600; }
+.stat-pill strong {
+    color: var(--text);
+    font-weight: 600;
+}
 
-/* ── Table (Admin / GridView) ─────────────── */
+/* admin table */
 .table-wrapper {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -599,7 +633,9 @@ table.table td {
     vertical-align: middle;
 }
 
-table.table tr:last-child td { border-bottom: none; }
+table.table tr:last-child td {
+    border-bottom: none;
+}
 
 table.table tr:hover td {
     background: var(--bg);
@@ -610,7 +646,6 @@ table.table .action-btns {
     gap: .4rem;
 }
 
-/* ── Pagination ───────────────────────────── */
 .pagination {
     display: flex;
     gap: .3rem;
@@ -639,7 +674,7 @@ table.table .action-btns {
     text-decoration: none;
 }
 
-/* ── Alert / Flash ────────────────────────── */
+/* alerts */
 .alert {
     padding: .85rem 1.1rem;
     border-radius: var(--radius-sm);
@@ -662,7 +697,7 @@ table.table .action-btns {
     border: 1px solid #EFC8C4;
 }
 
-/* ── Detail View ──────────────────────────── */
+/* detail ansicht wenn man eine task öffnet */
 .detail-view {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -695,9 +730,11 @@ table.table .action-btns {
 }
 
 .detail-view tr:last-child th,
-.detail-view tr:last-child td { border-bottom: none; }
+.detail-view tr:last-child td {
+    border-bottom: none;
+}
 
-/* ── Page Title Area ──────────────────────── */
+/* bereich fürn title */
 .page-header {
     margin-bottom: 1.75rem;
 }
@@ -713,7 +750,6 @@ table.table .action-btns {
     margin-top: .75rem;
 }
 
-/* ── Breadcrumb ───────────────────────────── */
 .breadcrumb {
     display: flex;
     align-items: center;
@@ -729,46 +765,77 @@ table.table .action-btns {
     color: var(--border);
 }
 
-.breadcrumb a { color: var(--text-muted); }
-.breadcrumb a:hover { color: var(--accent); text-decoration: none; }
+.breadcrumb a {
+    color: var(--text-muted);
+}
 
-/* ── Responsive Mobile ────────────────────── */
+.breadcrumb a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* responsive */
 @media (max-width: 768px) {
-    .main-content { padding: 1rem 1rem; }
+    .main-content {
+        padding: 1rem 1rem;
+    }
 
     .dashboard-hero {
         flex-direction: column;
         gap: .75rem;
     }
 
-    .dashboard-greeting { font-size: 1.4rem; }
+    .dashboard-greeting {
+        font-size: 1.4rem;
+    }
 
-    .filter-bar { flex-direction: column; }
-    .filter-bar input, .filter-bar select { width: 100%; min-width: 0; }
+    .filter-bar {
+        flex-direction: column;
+    }
 
-    .navbar { padding: 0 1rem; }
-    .navbar-nav { display: none; }
+    .filter-bar input, .filter-bar select {
+        width: 100%;
+        min-width: 0;
+    }
 
-    .sidebar { display: none; }
+    .navbar {
+        padding: 0 1rem;
+    }
 
-    .task-card-right { display: none; }
+    .navbar-nav {
+        display: none;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .task-card-right {
+        display: none;
+    }
 }
 
-/* ── Yii2 overrides ───────────────────────── */
-.yii-debug-toolbar { display: none !important; }
+/* überschreibt yii2 oder sowas */
+.yii-debug-toolbar {
+    display: none !important;
+}
 
-/* GridView Yii2 */
-.grid-view { overflow-x: auto; }
-.grid-view table { width: 100%; }
+/* formatierung fürn table */
+.grid-view {
+    overflow-x: auto;
+}
 
-/* Summary */
+.grid-view table {
+    width: 100%;
+}
+
 .summary {
     font-size: .78rem;
     color: var(--text-muted);
     margin-bottom: .6rem;
 }
 
-/* ErrorSummary */
+/* error formatierung */
 .error-summary {
     background: var(--danger-light);
     border: 1px solid #EFC8C4;
@@ -781,13 +848,19 @@ table.table .action-btns {
 
 .field-with-error input,
 .field-with-error select,
-.field-with-error textarea { border-color: var(--danger); }
+.field-with-error textarea {
+    border-color: var(--danger);
+}
 
-.help-block { font-size: .78rem; color: var(--danger); margin-top: .25rem; }
+.help-block {
+    font-size: .78rem;
+    color: var(--danger);
+    margin-top: .25rem;
+}
 
 .login-wrap {
     position: fixed;
-    top: 60px; /* Höhe der Navbar */
+    top: 60px; /* navbar höhe */
     left: 0;
     right: 0;
     bottom: 0;

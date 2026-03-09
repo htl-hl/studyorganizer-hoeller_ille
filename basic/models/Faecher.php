@@ -1,80 +1,45 @@
 <?php
+/** @var yii\web\View $this */
+/** @var app\models\Faecher $model */
 
-namespace app\models;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-use Yii;
+$isUpdate = !$model->isNewRecord;
+$this->title = $isUpdate ? 'Fach bearbeiten' : 'Neues Fach anlegen';
+?>
 
-/**
- * This is the model class for table "Faecher".
- *
- * @property string $F_Name
- *
- * @property Hausaufgaben[] $hausaufgabens
- * @property LehrerFaecher[] $lehrerFaechers
- * @property Lehrer[] $ls
- */
-class Faecher extends \yii\db\ActiveRecord
-{
+<div class="page-header">
+    <ul class="breadcrumb">
+        <li><?= Html::a('Admin', ['index']) ?></li>
+        <li><?= Html::a('Faecher', ['faecher']) ?></li>
+        <li><?= $this->title ?></li>
+    </ul>
+    <h1><?= Html::encode($this->title) ?></h1>
+</div>
 
+<div style="max-width:400px;">
+    <?php $form = ActiveForm::begin(); ?>
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'Faecher';
-    }
+    <?= $form->field($model, 'F_Name', ['options' => ['class' => 'form-group']])->textInput([
+        'maxlength'   => true,
+        'class'       => 'form-control',
+        'placeholder' => 'z.B. Mathematik',
+        'readonly'    => $isUpdate,
+    ])->label('Fachname') ?>
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['F_Name'], 'required'],
-            [['F_Name'], 'string', 'max' => 50],
-            [['F_Name'], 'unique'],
-        ];
-    }
+    <?php if ($isUpdate): ?>
+        <p style="font-size:.78rem; color:var(--text-muted); margin-top:-.5rem; margin-bottom:1rem;">
+            Der Fachname ist der Primaerschluessel und kann nicht geaendert werden.
+        </p>
+    <?php endif; ?>
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'F_Name' => 'F Name',
-        ];
-    }
+    <hr class="divider">
 
-    /**
-     * Gets query for [[Hausaufgabens]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHausaufgabens()
-    {
-        return $this->hasMany(Hausaufgaben::class, ['F_Name' => 'F_Name']);
-    }
+    <div style="display:flex; gap:.6rem;">
+        <?= Html::submitButton($isUpdate ? 'Speichern' : 'Anlegen', ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Abbrechen', ['faecher'], ['class' => 'btn btn-outline']) ?>
+    </div>
 
-    /**
-     * Gets query for [[LehrerFaechers]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLehrerFaechers()
-    {
-        return $this->hasMany(LehrerFaecher::class, ['F_Name' => 'F_Name']);
-    }
-
-    /**
-     * Gets query for [[Ls]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLs()
-    {
-        return $this->hasMany(Lehrer::class, ['L_ID' => 'L_ID'])->viaTable('Lehrer_Faecher', ['F_Name' => 'F_Name']);
-    }
-
-}
+    <?php ActiveForm::end(); ?>
+</div>
