@@ -1,107 +1,90 @@
 <?php
-/** @var yii\web\View $this */
-/** @var app\models\LehrerSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
-use app\models\Lehrer;
-use yii\helpers\Html;
-use yii\widgets\Pjax;
+namespace app\models;
 
-$this->title = 'Lehrerverwaltung';
-?>
+use Yii;
 
-    <div class="page-header">
-        <ul class="breadcrumb">
-            <li><?= Html::a('Admin', ['index']) ?></li>
-            <li>Lehrer</li>
-        </ul>
-        <h1>Lehrer <em style="font-style:italic; font-weight:300; color:var(--text-muted);">verwalten</em></h1>
-    </div>
+/**
+ * This is the model class for table "Lehrer".
+ *
+ * @property int $L_ID
+ * @property string|null $Vorname
+ * @property string|null $Nachname
+ * @property string|null $Kuerzel
+ * @property string|null $Status
+ *
+ * @property Faecher[] $fNames
+ * @property Hausaufgaben[] $hausaufgabens
+ * @property LehrerFaecher[] $lehrerFaechers
+ */
+class Lehrer extends \yii\db\ActiveRecord
+{
 
-<?php if (Yii::$app->session->hasFlash('success')): ?>
-    <div class="alert alert-success">
-        <?= Html::encode(Yii::$app->session->getFlash('success')) ?>
-    </div>
-<?php endif; ?>
-<?php if (Yii::$app->session->hasFlash('danger')): ?>
-    <div class="alert alert-danger">
-        <?= Html::encode(Yii::$app->session->getFlash('danger')) ?>
-    </div>
-<?php endif; ?>
 
-<?php Pjax::begin(); ?>
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'Lehrer';
+    }
 
-    <div class="table-wrapper">
-        <table class="table">
-            <thead>
-            <tr>
-                <th colspan="6" style="background:var(--surface); padding:.85rem 1rem;">
-                    <?= Html::a('+ Neuen Lehrer anlegen', ['lehrer-create'], ['class' => 'btn btn-primary']) ?>
-                </th>
-            </tr>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Kuerzel</th>
-                <th>Faecher</th>
-                <th>Status</th>
-                <th style="text-align:right;">Aktionen</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $models = $dataProvider->getModels();
-            ?>
-            <?php if (empty($models)): ?>
-                <tr>
-                    <td colspan="6" style="text-align:center; color:var(--text-muted); padding:2rem;">
-                        Keine Lehrer gefunden.
-                    </td>
-                </tr>
-            <?php else: ?>
-                <?php foreach ($models as $model): ?>
-                    <?php
-                    /** @var Lehrer $model */
-                    $isAktiv = ($model->Status === 'Aktiv');
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['Vorname', 'Nachname', 'Kuerzel', 'Status'], 'default', 'value' => null],
+            [['Vorname', 'Nachname'], 'string', 'max' => 50],
+            [['Kuerzel'], 'string', 'max' => 10],
+            [['Status'], 'string', 'max' => 20],
+            [['Kuerzel'], 'unique'],
+        ];
+    }
 
-                    $fNames = $model->getFNames()->all();
-                    $faecherList = '';
-                    foreach ($fNames as $f) {
-                        $faecherList .= Html::encode($f->F_Name) . ' ';
-                    }
-                    $faecherList = trim($faecherList);
-                    if ($faecherList === '') {
-                        $faecherList = '&mdash;';
-                    }
-                    ?>
-                    <tr>
-                        <td style="color:var(--text-muted); font-size:.8rem;"><?= $model->L_ID ?></td>
-                        <td><strong><?= Html::encode($model->Vorname) ?> <?= Html::encode($model->Nachname) ?></strong></td>
-                        <td style="color:var(--text-muted);"><?= Html::encode($model->Kuerzel) ?></td>
-                        <td style="font-size:.85rem;"><?= $faecherList ?></td>
-                        <td>
-                            <?php if ($isAktiv): ?>
-                                <span class="badge badge-erledigt">Aktiv</span>
-                            <?php else: ?>
-                                <span class="badge badge-rot">Inaktiv</span>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <div class="action-btns" style="justify-content:flex-end;">
-                                <?= Html::a('Bearbeiten', ['lehrer-update', 'L_ID' => $model->L_ID], ['class' => 'btn btn-sm btn-outline']) ?>
-                                <?= Html::a('Loeschen', ['lehrer-delete', 'L_ID' => $model->L_ID], [
-                                    'class'        => 'btn btn-sm btn-outline',
-                                    'style'        => 'color:var(--danger); border-color:var(--danger);',
-                                    'data-confirm' => 'Diesen Lehrer wirklich loeschen?',
-                                    'data-method'  => 'post',
-                                ]) ?>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'L_ID' => 'L ID',
+            'Vorname' => 'Vorname',
+            'Nachname' => 'Nachname',
+            'Kuerzel' => 'Kuerzel',
+            'Status' => 'Status',
+        ];
+    }
 
-<?php Pjax::end(); ?>
+    /**
+     * Gets query for [[FNames]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFNames()
+    {
+        return $this->hasMany(Faecher::class, ['F_Name' => 'F_Name'])->viaTable('Lehrer_Faecher', ['L_ID' => 'L_ID']);
+    }
+
+    /**
+     * Gets query for [[Hausaufgabens]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHausaufgabens()
+    {
+        return $this->hasMany(Hausaufgaben::class, ['L_ID' => 'L_ID']);
+    }
+
+    /**
+     * Gets query for [[LehrerFaechers]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLehrerFaechers()
+    {
+        return $this->hasMany(LehrerFaecher::class, ['L_ID' => 'L_ID']);
+    }
+
+}
