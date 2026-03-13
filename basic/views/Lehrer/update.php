@@ -1,21 +1,19 @@
 <?php
-
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
 /** @var app\models\Lehrer $model */
 
-$this->title = 'Update Lehrer: ' . $model->L_ID;
-$this->params['breadcrumbs'][] = ['label' => 'Lehrers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->L_ID, 'url' => ['view', 'L_ID' => $model->L_ID]];
-$this->params['breadcrumbs'][] = 'Update';
+use yii\helpers\Html;
+
+$this->title = 'Lehrer bearbeiten: ' . Html::encode($model->Vorname) . ' ' . Html::encode($model->Nachname);
 ?>
-<div class="lehrer-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="page-header">
+        <ul class="breadcrumb">
+            <li><?= Html::a('Admin', ['/admin/index']) ?></li>
+            <li><?= Html::a('Lehrer', ['index']) ?></li>
+            <li>Bearbeiten</li>
+        </ul>
+        <h1><em style="font-style:italic; font-weight:300;">Bearbeiten:</em> <?= Html::encode($model->Vorname) ?> <?= Html::encode($model->Nachname) ?></h1>
+    </div>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>
+<?= $this->render('_form', ['model' => $model]) ?>

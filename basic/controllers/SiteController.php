@@ -62,6 +62,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
+            return $this->redirect(['/admin/index']);
+        }
+
         $userId = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
 
         $query = Hausaufgaben::find();
@@ -99,7 +104,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if (Yii::$app->user->identity->isAdmin()) {
-                return $this->redirect(['/user/index']);
+                return $this->redirect(['/admin/index']);
             } else {
                 return $this->redirect(['/site/index']);
             }

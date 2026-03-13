@@ -33,9 +33,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <ul class="navbar-nav">
             <li><?= Html::a('Dashboard', ['/site/index'], ['class' => $this->context->route === 'site/index' ? 'active' : '']) ?></li>
             <li><?= Html::a('Hausaufgaben', ['/hausaufgaben/index'], ['class' => str_starts_with($this->context->route, 'hausaufgaben') ? 'active' : '']) ?></li>
-            <li><?= Html::a('Fächer', ['/faecher/index'], ['class' => str_starts_with($this->context->route, 'faecher') ? 'active' : '']) ?></li>
-            <li><?= Html::a('Lehrer', ['/lehrer/index'], ['class' => str_starts_with($this->context->route, 'lehrer') ? 'active' : '']) ?></li>
-            <li><?= Html::a('Users', ['/user/index'], ['class' => str_starts_with($this->context->route, 'user') ? 'active' : '']) ?></li>
+            <?php if (Yii::$app->user->isGuest || !Yii::$app->user->identity->isAdmin()): ?>
+                <li><?= Html::a('Faecher', ['/faecher/index'], ['class' => str_starts_with($this->context->route, 'faecher') ? 'active' : '']) ?></li>
+                <li><?= Html::a('Lehrer', ['/lehrer/index'], ['class' => str_starts_with($this->context->route, 'lehrer') ? 'active' : '']) ?></li>
+                <li><?= Html::a('Users', ['/user/index'], ['class' => str_starts_with($this->context->route, 'user') ? 'active' : '']) ?></li>
+            <?php endif; ?>
+            <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()): ?>
+                <li><?= Html::a('Admin', ['/admin/index'], ['class' => str_starts_with($this->context->route, 'admin') ? 'active' : '']) ?></li>
+            <?php endif; ?>
         </ul>
 
         <div class="navbar-greeting">
