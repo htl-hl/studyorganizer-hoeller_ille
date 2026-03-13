@@ -141,7 +141,7 @@ a:hover {
     font-weight: 600;
 }
 
-/* sidebar beim admin */
+/* sidebar beim Admin */
 .sidebar {
     width: 220px;
     background: var(--surface);
@@ -599,7 +599,7 @@ select {
     font-weight: 600;
 }
 
-/* admin table */
+/* Admin table */
 .table-wrapper {
     background: var(--surface);
     border: 1px solid var(--border);

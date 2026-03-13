@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
-$this->registerCssFile('@web/css/hausaufgaben.css');
+$this->registerCssFile('@web/css/Hausaufgaben.css');
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
@@ -47,9 +47,9 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
                     <li>
                         <?php
                         $route = $this->context->route;
-                        $faecherActive  = str_starts_with($route, 'faecher') ? 'active' : '';
-                        $lehrerActive   = str_starts_with($route, 'lehrer')  ? 'active' : '';
-                        $schuelerActive = str_starts_with($route, 'admin')   ? 'active' : '';
+                        $faecherActive  = str_starts_with($route, 'Faecher') ? 'active' : '';
+                        $lehrerActive   = str_starts_with($route, 'Lehrer')  ? 'active' : '';
+                        $schuelerActive = str_starts_with($route, 'Admin')   ? 'active' : '';
                         ?>
                         <?= Html::a('Faecher verwalten', ['/faecher/index'], ['class' => $faecherActive]) ?>
                     </li>

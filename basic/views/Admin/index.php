@@ -47,7 +47,7 @@ $this->title = 'Benutzerverwaltung';
         </div>
     </div>
 
-<?php Pjax::begin(['id' => 'user-pjax']); ?>
+<?php Pjax::begin(['id' => 'User-pjax']); ?>
 
     <div class="filter-bar">
         <?php $form = \yii\widgets\ActiveForm::begin([
@@ -128,7 +128,7 @@ $this->title = 'Benutzerverwaltung';
                                     $toggleLabel = $isModelAdmin ? 'Admin entziehen' : 'Zum Admin';
                                     $toggleStyle = $isModelAdmin ? 'color:var(--warn); border-color:var(--warn);' : 'color:var(--accent); border-color:var(--accent);';
                                     ?>
-                                    <?= Html::a($toggleLabel, ['toggle-admin', 'U_ID' => $model->U_ID], [
+                                    <?= Html::a($toggleLabel, ['toggle-Admin', 'U_ID' => $model->U_ID], [
                                             'class'        => 'btn btn-sm btn-outline',
                                             'style'        => $toggleStyle,
                                             'data-confirm' => $confirmToggle,

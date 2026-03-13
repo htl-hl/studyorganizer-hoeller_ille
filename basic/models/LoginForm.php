@@ -8,7 +8,7 @@ use yii\base\Model;
 /**
  * LoginForm is the model behind the login form.
  *
- * @property-read User|null $user
+ * @property-read User|null $User
  *
  */
 class LoginForm extends Model
@@ -54,8 +54,8 @@ class LoginForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
+     * Logs in a User using the provided username and password.
+     * @return bool whether the User is logged in successfully
      */
     public function login()
     {
@@ -66,7 +66,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[username]]
+     * Finds User by [[username]]
      *
      * @return User|null
      */

@@ -97,7 +97,7 @@ $isModelAdmin  = $model->isAdmin();
         $toggleStyle   = $isModelAdmin ? 'color:var(--warn); border-color:var(--warn);' : 'color:var(--accent); border-color:var(--accent);';
         $toggleConfirm = $isModelAdmin ? 'Admin-Rechte wirklich entziehen?' : 'Diesen User zum Admin machen?';
         ?>
-        <?= Html::a($toggleLabel, ['toggle-admin', 'U_ID' => $model->U_ID], [
+        <?= Html::a($toggleLabel, ['toggle-Admin', 'U_ID' => $model->U_ID], [
                 'class'        => 'btn btn-outline',
                 'style'        => $toggleStyle,
                 'data-confirm' => $toggleConfirm,
