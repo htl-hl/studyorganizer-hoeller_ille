@@ -20,11 +20,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Status')->dropDownList([ 'Open' => 'Open', 'Closed' => 'Closed']) ?>
 
-    <?= $form->field($model, 'F_Name')->dropDownList($dropdownSubjects, ['prompt' => '']) ?>
+    <?= $form->field($model, 'F_Name')->dropDownList($dropdownFaecher, ['prompt' => '']) ?>
 
     <?= $form->field($model, 'U_ID')->dropDownList($dropdownUser, ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'L_ID')->dropDownList($dropdownTeacher, ['prompt' => '']) ?>
+    <?= $form->field($model, 'L_ID')->dropDownList($dropdownLehrer, ['prompt' => '']) ?>
 
 
     <!--    --><?php //= $form->field($model, 'L_ID')->textInput() ?>

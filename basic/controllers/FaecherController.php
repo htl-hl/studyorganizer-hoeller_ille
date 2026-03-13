@@ -49,12 +49,14 @@ class FaecherController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Faecher();
         $searchModel = new FaecherSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
