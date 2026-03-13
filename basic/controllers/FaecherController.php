@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Faecher;
 use app\models\FaecherSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,9 +14,14 @@ use yii\filters\VerbFilter;
  */
 class FaecherController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+    public function beforeAction($action)
+    {
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
+            $this->layout = 'admin';
+        }
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return array_merge(
@@ -28,7 +34,7 @@ class FaecherController extends Controller
                     ],
                 ],
                 'access' => [
-                    'class' => \yii\filters\AccessControl::class,
+                    'class' => \yii\filters\AccessControl::className(),
                     'only' => ['create', 'update', 'delete'],
                     'rules' => [
                         [
@@ -42,11 +48,6 @@ class FaecherController extends Controller
         );
     }
 
-    /**
-     * Lists all Faecher models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $model = new Faecher();
@@ -54,18 +55,12 @@ class FaecherController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
-            'model' => $model,
+            'model'        => $model,
         ]);
     }
 
-    /**
-     * Displays a single Faecher model.
-     * @param string $F_Name F Name
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($F_Name)
     {
         return $this->render('view', [
@@ -73,11 +68,6 @@ class FaecherController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Faecher model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Faecher();
@@ -95,13 +85,6 @@ class FaecherController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Faecher model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $F_Name F Name
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($F_Name)
     {
         $model = $this->findModel($F_Name);
@@ -115,33 +98,17 @@ class FaecherController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Faecher model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $F_Name F Name
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($F_Name)
     {
         $this->findModel($F_Name)->delete();
-
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Faecher model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $F_Name F Name
-     * @return Faecher the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($F_Name)
     {
         if (($model = Faecher::findOne(['F_Name' => $F_Name])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
