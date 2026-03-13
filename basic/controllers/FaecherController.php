@@ -17,7 +17,7 @@ class FaecherController extends Controller
     public function beforeAction($action)
     {
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
-            $this->layout = 'admin';
+            $this->layout = 'Admin';
         }
         return parent::beforeAction($action);
     }
@@ -41,6 +41,9 @@ class FaecherController extends Controller
                             'allow' => true,
                             'actions' => ['create', 'update', 'delete'],
                             'roles' => ['@'],
+                            'matchCallback' => function ($rule, $action) {
+                                return Yii::$app->user->identity->isAdmin();
+                            }
                         ],
                     ],
                 ],

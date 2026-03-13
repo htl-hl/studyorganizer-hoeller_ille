@@ -110,7 +110,10 @@ $allSubjects = array_unique(array_filter(array_map(
                     <?php if ($task->Faelligkeitsdatum): ?>
                         <span class="task-date"><?= date('d. M', strtotime($task->Faelligkeitsdatum)) ?></span>
                     <?php endif ?>
-                    <span class="badge <?= $info['class'] ?>"><?= $info['label'] ?></span>
+                    <?= Html::a($info['label'], ['/hausaufgaben/toggle-status', 'HU_ID' => $task->HU_ID], [
+                            'class' => 'badge ' . $info['class'],
+                            'style' => 'cursor:pointer; text-decoration:none;',
+                    ]) ?>
                     <?= Html::a('Bearbeiten', ['/hausaufgaben/update', 'HU_ID' => $task->HU_ID], ['class' => 'btn btn-secondary btn-sm']) ?>
                 </div>
             </div>
@@ -153,7 +156,10 @@ $allSubjects = array_unique(array_filter(array_map(
                 </div>
 
                 <div class="task-right">
-                    <span class="badge badge-erledigt">✓ Erledigt</span>
+                    <?= Html::a('✓ Erledigt', ['/hausaufgaben/toggle-status', 'HU_ID' => $task->HU_ID], [
+                            'class' => 'badge badge-erledigt',
+                            'style' => 'cursor:pointer; text-decoration:none;',
+                    ]) ?>
                     <?= Html::a('Ansehen', ['/hausaufgaben/view', 'HU_ID' => $task->HU_ID], ['class' => 'btn btn-secondary btn-sm']) ?>
                 </div>
             </div>

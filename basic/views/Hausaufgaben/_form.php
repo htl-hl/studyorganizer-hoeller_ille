@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'F_Name')->dropDownList($dropdownFaecher, ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'U_ID')->dropDownList($dropdownUser, ['prompt' => '']) ?>
+    <?= $form->field($model, 'U_ID')->hiddenInput()->label(false) ?>
 
     <?= $form->field($model, 'L_ID')->dropDownList($dropdownLehrer, ['prompt' => '']) ?>
 

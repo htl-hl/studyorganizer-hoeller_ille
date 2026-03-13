@@ -92,6 +92,6 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->Name;
     }
     public function isAdmin() {
-        return $this->is_admin == 1;
+        return (int)$this->is_admin === 1;
     }
 }

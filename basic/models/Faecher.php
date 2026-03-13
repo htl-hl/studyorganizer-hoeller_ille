@@ -6,7 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * Dies ist die Model-Klasse für die Tabelle "faecher".
+ * Dies ist die Model-Klasse für die Tabelle "Faecher".
  *
  * @property string $F_Name
  */

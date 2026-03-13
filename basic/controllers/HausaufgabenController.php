@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Faecher;
 use app\models\Hausaufgaben;
 use app\models\HausaufgabenSearch;
@@ -109,12 +110,17 @@ class HausaufgabenController extends Controller
             $model->loadDefaultValues();
         }
 
+
+        if (!Yii::$app->user->isGuest || !Yii::$app->user->identity->isAdmin()) {
+            $model->U_ID = Yii::$app->user->id;
+        }
+
         return $this->render('create', [
             'model' => $model,
             'dropdownLehrer' => $dropdownLehrer,
             'dropdownUser' => $dropdownUser,
             'dropdownFaecher' => $dropdownFaecher,
-            'hausaufgaben' => $hausaufgaben,
+            'Hausaufgaben' => $hausaufgaben,
         ]);
     }
 
@@ -129,12 +135,20 @@ class HausaufgabenController extends Controller
     {
         $model = $this->findModel($HU_ID);
 
+        $lehrer = Lehrer::find()->all();
+        $faecher = Faecher::find()->all();
+
+        $dropdownLehrer = ArrayHelper::map($lehrer, 'L_ID', 'Nachname');
+        $dropdownFaecher = ArrayHelper::map($faecher, 'F_Name', 'F_Name');
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'HU_ID' => $model->HU_ID]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'dropdownLehrer' => $dropdownLehrer,
+            'dropdownFaecher' => $dropdownFaecher,
         ]);
     }
 
@@ -166,5 +180,12 @@ class HausaufgabenController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    public function actionToggleStatus($HU_ID)
+    {
+        $model = $this->findModel($HU_ID);
+        $model->Status = ($model->Status === 'erledigt') ? 'offen' : 'erledigt';
+        $model->save(false);
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
     }
 }

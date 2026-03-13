@@ -12,7 +12,7 @@ $this->title = $isUpdate ? 'Lehrer bearbeiten' : 'Neuen Lehrer anlegen';
 <div class="page-header">
     <ul class="breadcrumb">
         <li><?= Html::a('Admin', ['index']) ?></li>
-        <li><?= Html::a('Lehrer', ['lehrer']) ?></li>
+        <li><?= Html::a('Lehrer', ['Lehrer']) ?></li>
         <li><?= $this->title ?></li>
     </ul>
     <h1><?= Html::encode($this->title) ?></h1>
@@ -54,7 +54,7 @@ $this->title = $isUpdate ? 'Lehrer bearbeiten' : 'Neuen Lehrer anlegen';
 
     <div style="display:flex; gap:.6rem;">
         <?= Html::submitButton($isUpdate ? 'Speichern' : 'Anlegen', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Abbrechen', ['lehrer'], ['class' => 'btn btn-outline']) ?>
+        <?= Html::a('Abbrechen', ['Lehrer'], ['class' => 'btn btn-outline']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

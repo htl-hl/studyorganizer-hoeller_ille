@@ -6,9 +6,6 @@ use yii\helpers\Html;
 /** @var app\models\Hausaufgaben $model */
 
 $this->title = 'Update Hausaufgaben: ' . $model->HU_ID;
-$this->params['breadcrumbs'][] = ['label' => 'Hausaufgabens', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->HU_ID, 'url' => ['view', 'HU_ID' => $model->HU_ID]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="hausaufgaben-update">
 
@@ -16,6 +13,8 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+            'dropdownLehrer' => $dropdownLehrer,
+            'dropdownFaecher' => $dropdownFaecher,
     ]) ?>
 
 </div>

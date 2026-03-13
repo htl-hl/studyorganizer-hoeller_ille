@@ -29,7 +29,7 @@ return [
         'urlManager' => [
             'showScriptName' => true,
         ],
-        'user' => [
+        'User' => [
             'identityClass' => 'app\models\User',
         ],
         'request' => [
