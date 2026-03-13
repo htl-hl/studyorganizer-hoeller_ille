@@ -47,17 +47,17 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
                     <li>
                         <?php
                         $route = $this->context->route;
-                        $fächerActive  = ($route === 'faecher/index')  ? 'active' : '';
-                        $lehrerActive   = ($route === 'lehrer/index')   ? 'active' : '';
-                        $schülerActive = ($route === 'admin/index' || $route === 'admin/view' || $route === 'admin/create' || $route === 'admin/update') ? 'active' : '';
+                        $faecherActive  = str_starts_with($route, 'faecher') ? 'active' : '';
+                        $lehrerActive   = str_starts_with($route, 'lehrer')  ? 'active' : '';
+                        $schuelerActive = str_starts_with($route, 'admin')   ? 'active' : '';
                         ?>
-                        <?= Html::a('Fächer verwalten', ['faecher/index'], ['class' => $fächerActive]) ?>
+                        <?= Html::a('Faecher verwalten', ['/faecher/index'], ['class' => $faecherActive]) ?>
                     </li>
                     <li>
                         <?= Html::a('Lehrer verwalten', ['/lehrer/index'], ['class' => $lehrerActive]) ?>
                     </li>
                     <li>
-                        <?= Html::a('Schüler verwalten', ['/admin/index'], ['class' => $schülerActive]) ?>
+                        <?= Html::a('Schueler verwalten', ['/admin/index'], ['class' => $schuelerActive]) ?>
                     </li>
                 </ul>
             </div>
