@@ -21,7 +21,7 @@ class Yii
 
 /**
  * @property yii\rbac\DbManager $authManager
- * @property \yii\web\User|__WebUser $user
+ * @property \yii\web\User|__WebUser $User
  */
 class __Application
 {

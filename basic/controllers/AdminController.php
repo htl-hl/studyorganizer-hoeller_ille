@@ -17,7 +17,7 @@ use yii\filters\AccessControl;
 
 class AdminController extends Controller
 {
-    public $layout = 'admin';
+    public $layout = 'Admin';
 
     public function behaviors()
     {
@@ -37,9 +37,9 @@ class AdminController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete'         => ['POST'],
-                        'toggle-admin'   => ['POST'],
-                        'lehrer-delete'  => ['POST'],
-                        'faecher-delete' => ['POST'],
+                        'toggle-Admin'   => ['POST'],
+                        'Lehrer-delete'  => ['POST'],
+                        'Faecher-delete' => ['POST'],
                     ],
                 ],
             ]
@@ -189,7 +189,7 @@ class AdminController extends Controller
         $searchModel  = new LehrerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('lehrer', [
+        return $this->render('Lehrer', [
             'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -202,10 +202,10 @@ class AdminController extends Controller
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Lehrer wurde erstellt.');
-            return $this->redirect(['lehrer']);
+            return $this->redirect(['Lehrer']);
         }
 
-        return $this->render('lehrer-form', ['model' => $model]);
+        return $this->render('Lehrer-form', ['model' => $model]);
     }
 
     public function actionLehrerUpdate($L_ID)
@@ -215,10 +215,10 @@ class AdminController extends Controller
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Lehrer wurde aktualisiert.');
-            return $this->redirect(['lehrer']);
+            return $this->redirect(['Lehrer']);
         }
 
-        return $this->render('lehrer-form', ['model' => $model]);
+        return $this->render('Lehrer-form', ['model' => $model]);
     }
 
     public function actionLehrerDelete($L_ID)
@@ -226,7 +226,7 @@ class AdminController extends Controller
         $this->requireAdmin();
         $this->findLehrer($L_ID)->delete();
         Yii::$app->session->setFlash('success', 'Lehrer wurde geloescht.');
-        return $this->redirect(['lehrer']);
+        return $this->redirect(['Lehrer']);
     }
 
     protected function findLehrer($L_ID)
@@ -249,7 +249,7 @@ class AdminController extends Controller
         $searchModel  = new FaecherSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('faecher', [
+        return $this->render('Faecher', [
             'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -262,10 +262,10 @@ class AdminController extends Controller
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Fach wurde erstellt.');
-            return $this->redirect(['faecher']);
+            return $this->redirect(['Faecher']);
         }
 
-        return $this->render('faecher-form', ['model' => $model]);
+        return $this->render('Faecher-form', ['model' => $model]);
     }
 
     public function actionFaecherUpdate($F_Name)
@@ -275,10 +275,10 @@ class AdminController extends Controller
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Fach wurde aktualisiert.');
-            return $this->redirect(['faecher']);
+            return $this->redirect(['Faecher']);
         }
 
-        return $this->render('faecher-form', ['model' => $model]);
+        return $this->render('Faecher-form', ['model' => $model]);
     }
 
     public function actionFaecherDelete($F_Name)
@@ -286,7 +286,7 @@ class AdminController extends Controller
         $this->requireAdmin();
         $this->findFach($F_Name)->delete();
         Yii::$app->session->setFlash('success', 'Fach wurde geloescht.');
-        return $this->redirect(['faecher']);
+        return $this->redirect(['Faecher']);
     }
 
     protected function findFach($F_Name)

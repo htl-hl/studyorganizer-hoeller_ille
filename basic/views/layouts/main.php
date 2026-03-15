@@ -9,7 +9,7 @@ use yii\helpers\Html;
 
 AppAsset::register($this);
 
-$this->registerCssFile('@web/css/hausaufgaben.css');
+$this->registerCssFile('@web/css/Hausaufgaben.css');
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
@@ -32,14 +32,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
         <ul class="navbar-nav">
             <li><?= Html::a('Dashboard', ['/site/index'], ['class' => $this->context->route === 'site/index' ? 'active' : '']) ?></li>
-            <li><?= Html::a('Hausaufgaben', ['/hausaufgaben/index'], ['class' => str_starts_with($this->context->route, 'hausaufgaben') ? 'active' : '']) ?></li>
+            <li><?= Html::a('Hausaufgaben', ['/hausaufgaben/index'], ['class' => str_starts_with($this->context->route, 'Hausaufgaben') ? 'active' : '']) ?></li>
             <?php if (Yii::$app->user->isGuest || !Yii::$app->user->identity->isAdmin()): ?>
-                <li><?= Html::a('Faecher', ['/faecher/index'], ['class' => str_starts_with($this->context->route, 'faecher') ? 'active' : '']) ?></li>
-                <li><?= Html::a('Lehrer', ['/lehrer/index'], ['class' => str_starts_with($this->context->route, 'lehrer') ? 'active' : '']) ?></li>
-                <li><?= Html::a('Users', ['/user/index'], ['class' => str_starts_with($this->context->route, 'user') ? 'active' : '']) ?></li>
+                <li><?= Html::a('Faecher', ['/faecher/index'], ['class' => str_starts_with($this->context->route, 'Faecher') ? 'active' : '']) ?></li>
+                <li><?= Html::a('Lehrer', ['/lehrer/index'], ['class' => str_starts_with($this->context->route, 'Lehrer') ? 'active' : '']) ?></li>
+                <li><?= Html::a('Users', ['/user/index'], ['class' => str_starts_with($this->context->route, 'User') ? 'active' : '']) ?></li>
             <?php endif; ?>
             <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()): ?>
-                <li><?= Html::a('Admin', ['/admin/index'], ['class' => str_starts_with($this->context->route, 'admin') ? 'active' : '']) ?></li>
+                <li><?= Html::a('Admin', ['/admin/index'], ['class' => str_starts_with($this->context->route, 'Admin') ? 'active' : '']) ?></li>
             <?php endif; ?>
         </ul>
 
