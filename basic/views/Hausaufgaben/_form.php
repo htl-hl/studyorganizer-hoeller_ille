@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Beschreibung')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'Faelligkeitsdatum')->textInput() ?>
+    <?= $form->field($model, 'Faelligkeitsdatum')->input('date', ['class' => 'form-control date-picker']) ?>
 
     <?= $form->field($model, 'Status')->dropDownList([ 'Open' => 'Open', 'Closed' => 'Closed']) ?>
 
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
     <!--    --><?php //= $form->field($model, 'L_ID')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Erstellen', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
