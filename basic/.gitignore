@@ -1,6 +1,5 @@
 # phpstorm project files
-.idea/
-.ddev/
+.idea
 
 # visual studio code project files
 .vscode
@@ -17,9 +16,7 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-vendor/
-runtime/
-web/assets/
+/vendor
 
 # composer itself is not needed
 composer.phar
