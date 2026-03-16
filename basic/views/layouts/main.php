@@ -33,9 +33,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <ul class="navbar-nav">
             <li><?= Html::a('Dashboard', ['/site/index'], ['class' => $this->context->route === 'site/index' ? 'active' : '']) ?></li>
 
-            <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin()): ?>
-                <li><?= Html::a('Hausaufgaben', ['/hausaufgaben/index'], ['class' => str_starts_with($this->context->route, 'Hausaufgaben') ? 'active' : '']) ?></li>
-            <?php endif; ?>
+<!--            --><?php //if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin()): ?>
+<!--                <li>--><?php //= Html::a('Hausaufgaben', ['/hausaufgaben/index'], ['class' => str_starts_with($this->context->route, 'Hausaufgaben') ? 'active' : '']) ?><!--</li>-->
+<!--            --><?php //endif; ?>
 
             <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()): ?>
                 <li><?= Html::a('Faecher', ['/faecher/index'], ['class' => str_starts_with($this->context->route, 'Faecher') ? 'active' : '']) ?></li>

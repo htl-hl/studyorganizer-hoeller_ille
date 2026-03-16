@@ -37,7 +37,7 @@ class AdminController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete'         => ['POST'],
-                        'toggle-Admin'   => ['POST'],
+                        'toggle-admin'   => ['POST'],
                         'Lehrer-delete'  => ['POST'],
                         'Faecher-delete' => ['POST'],
                     ],

@@ -117,7 +117,7 @@ $this->title = 'Benutzerverwaltung';
                                 <?php if (!$isCurrentUser): ?>
                                     <?= Html::a(
                                             $isModelAdmin ? 'Admin entziehen' : 'Zum Admin',
-                                            ['toggle-Admin', 'U_ID' => $model->U_ID],
+                                            ['toggle-admin', 'U_ID' => $model->U_ID],
                                             [
                                                     'class'        => 'btn btn-sm btn-outline ' . ($isModelAdmin ? 'btn-outline-warn' : 'btn-outline-accent'),
                                                     'data-confirm' => $confirmToggle,

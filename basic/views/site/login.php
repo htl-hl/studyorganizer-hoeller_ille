@@ -48,7 +48,7 @@ $this->title = 'Login';
                 'options' => ['class' => 'form-group', 'style' => 'display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem'],
                 'labelOptions' => ['style' => 'text-transform:none;font-size:.875rem;font-weight:400;color:var(--text);margin:0;letter-spacing:0'],
                 'inputOptions' => ['style' => 'width:auto;margin:0'],
-        ])->checkbox()->label('Angemeldet bleiben') ?>
+        ])->checkbox()->label('') ?>
 
         <?= Html::submitButton('Anmelden', [
                 'class' => 'btn btn-primary',
