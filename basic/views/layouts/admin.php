@@ -50,7 +50,6 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
                         $faecherActive  = str_starts_with($route, 'Faecher') ? 'active' : '';
                         $lehrerActive   = str_starts_with($route, 'Lehrer')  ? 'active' : '';
                         $schuelerActive = str_starts_with($route, 'Admin')   ? 'active' : '';
-                        $userActive     = str_starts_with($route, 'user')    ? 'active' : '';
 
                         ?>
                         <?= Html::a('Faecher verwalten', ['/faecher/index'], ['class' => $faecherActive]) ?>
@@ -60,9 +59,6 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
                     </li>
                     <li>
                         <?= Html::a('Schueler verwalten', ['/admin/index'], ['class' => $schuelerActive]) ?>
-                    </li>
-                    <li>
-                        <?= Html::a('Users verwalten', ['/user/index'], ['class' => $userActive]) ?>
                     </li>
                 </ul>
             </div>

@@ -18,7 +18,7 @@ $this->title = 'Benutzerverwaltung';
             <li><?= Html::a('Admin', ['index']) ?></li>
             <li>Benutzer</li>
         </ul>
-        <h1>Benutzer <em style="font-style:italic; font-weight:300; color:var(--text-muted); font-size:1.4rem;">verwalten</em></h1>
+        <h1>Benutzer <em>verwalten</em></h1>
         <div class="page-actions">
             <?= Html::a('+ Neuer Benutzer', ['create'], ['class' => 'btn btn-primary']) ?>
         </div>
@@ -35,19 +35,13 @@ $this->title = 'Benutzerverwaltung';
     </div>
 <?php endif; ?>
 
-    <div style="display:flex; gap:.75rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-        <div class="stat-pill">
-            <strong><?= $totalUsers ?></strong>&nbsp;Benutzer gesamt
-        </div>
-        <div class="stat-pill">
-            <strong><?= $adminCount ?></strong>&nbsp;Admin(s)
-        </div>
-        <div class="stat-pill">
-            <strong><?= $normalCount ?></strong>&nbsp;normale User
-        </div>
+    <div class="stats-row">
+        <div class="stat-pill"><strong><?= $totalUsers ?></strong>&nbsp;Benutzer gesamt</div>
+        <div class="stat-pill"><strong><?= $adminCount ?></strong>&nbsp;Admin(s)</div>
+        <div class="stat-pill"><strong><?= $normalCount ?></strong>&nbsp;normale User</div>
     </div>
 
-<?php Pjax::begin(['id' => 'User-pjax']); ?>
+<?php Pjax::begin(['id' => 'user-pjax']); ?>
 
     <div class="filter-bar">
         <?php $form = \yii\widgets\ActiveForm::begin([
@@ -59,9 +53,8 @@ $this->title = 'Benutzerverwaltung';
                name="UserSearch[Name]"
                value="<?= Html::encode($searchModel->Name) ?>"
                placeholder="Nach Name suchen"
-               class="form-control"
-               style="flex:1; min-width:180px;">
-        <select name="UserSearch[is_admin]" class="form-control" style="flex:0 0 auto; min-width:140px;">
+               class="form-control">
+        <select name="UserSearch[is_admin]" class="form-control select-narrow">
             <option value="">Alle Rollen</option>
             <option value="1" <?php if ($searchModel->is_admin === '1') { echo 'selected'; } ?>>Nur Admins</option>
             <option value="0" <?php if ($searchModel->is_admin === '0') { echo 'selected'; } ?>>Nur normale User</option>
@@ -79,7 +72,7 @@ $this->title = 'Benutzerverwaltung';
                 <th>Name</th>
                 <th>Rolle</th>
                 <th>ID</th>
-                <th style="text-align:right;">Aktionen</th>
+                <th class="col-actions">Aktionen</th>
             </tr>
             </thead>
             <tbody>
@@ -90,9 +83,7 @@ $this->title = 'Benutzerverwaltung';
             ?>
             <?php if (empty($models)): ?>
                 <tr>
-                    <td colspan="5" style="text-align:center; color:var(--text-muted); padding:2rem;">
-                        Keine Benutzer gefunden.
-                    </td>
+                    <td colspan="5" class="table-empty">Keine Benutzer gefunden.</td>
                 </tr>
             <?php else: ?>
                 <?php foreach ($models as $i => $model): ?>
@@ -104,39 +95,37 @@ $this->title = 'Benutzerverwaltung';
                     $confirmDelete = 'Diesen User wirklich loeschen?';
                     ?>
                     <tr>
-                        <td style="color:var(--text-muted); font-size:.8rem;"><?= $offset + $i + 1 ?></td>
+                        <td class="col-id"><?= $offset + $i + 1 ?></td>
                         <td>
                             <strong><?= Html::encode($model->Name) ?></strong>
                             <?php if ($isCurrentUser): ?>
-                                <span style="font-size:.72rem; color:var(--text-muted); margin-left:.4rem;">(du)</span>
+                                <span class="user-tag">(du)</span>
                             <?php endif; ?>
                         </td>
                         <td>
                             <?php if ($isModelAdmin): ?>
-                                <span class="badge" style="background:var(--accent-light); color:var(--accent);">Admin</span>
+                                <span class="badge badge-admin">Admin</span>
                             <?php else: ?>
-                                <span class="badge" style="background:var(--surface-2); color:var(--text-muted);">User</span>
+                                <span class="badge badge-user">User</span>
                             <?php endif; ?>
                         </td>
-                        <td style="color:var(--text-muted); font-size:.8rem;"><?= $model->U_ID ?></td>
+                        <td class="col-id"><?= $model->U_ID ?></td>
                         <td>
-                            <div class="action-btns" style="justify-content:flex-end;">
+                            <div class="action-btns action-btns-right">
                                 <?= Html::a('Ansehen', ['view', 'U_ID' => $model->U_ID], ['class' => 'btn btn-sm btn-outline']) ?>
                                 <?= Html::a('Bearbeiten', ['update', 'U_ID' => $model->U_ID], ['class' => 'btn btn-sm btn-outline']) ?>
                                 <?php if (!$isCurrentUser): ?>
-                                    <?php
-                                    $toggleLabel = $isModelAdmin ? 'Admin entziehen' : 'Zum Admin';
-                                    $toggleStyle = $isModelAdmin ? 'color:var(--warn); border-color:var(--warn);' : 'color:var(--accent); border-color:var(--accent);';
-                                    ?>
-                                    <?= Html::a($toggleLabel, ['toggle-Admin', 'U_ID' => $model->U_ID], [
-                                            'class'        => 'btn btn-sm btn-outline',
-                                            'style'        => $toggleStyle,
-                                            'data-confirm' => $confirmToggle,
-                                            'data-method'  => 'post',
-                                    ]) ?>
+                                    <?= Html::a(
+                                            $isModelAdmin ? 'Admin entziehen' : 'Zum Admin',
+                                            ['toggle-Admin', 'U_ID' => $model->U_ID],
+                                            [
+                                                    'class'        => 'btn btn-sm btn-outline ' . ($isModelAdmin ? 'btn-outline-warn' : 'btn-outline-accent'),
+                                                    'data-confirm' => $confirmToggle,
+                                                    'data-method'  => 'post',
+                                            ]
+                                    ) ?>
                                     <?= Html::a('Loeschen', ['delete', 'U_ID' => $model->U_ID], [
-                                            'class'        => 'btn btn-sm btn-outline',
-                                            'style'        => 'color:var(--danger); border-color:var(--danger);',
+                                            'class'        => 'btn btn-sm btn-outline btn-outline-danger',
                                             'data-confirm' => $confirmDelete,
                                             'data-method'  => 'post',
                                     ]) ?>
