@@ -100,11 +100,6 @@ a:hover {
     letter-spacing: -.02em;
 }
 
-.navbar-brand span {
-    font-style: italic;
-    font-weight: 300;
-}
-
 .navbar-nav {
     display: flex;
     align-items: center;
@@ -186,141 +181,6 @@ a:hover {
     text-decoration: none;
 }
 
-.sidebar-icon {
-    width: 16px;
-    height: 16px;
-    opacity: .6;
-}
-
-/* cards */
-.card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-sm);
-}
-
-.card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.25rem;
-}
-
-.card-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-}
-
-/* aufgaben cards formatierung */
-.task-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    transition: box-shadow var(--transition), border-color var(--transition);
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-}
-
-.task-card:hover {
-    box-shadow: var(--shadow-md);
-    border-color: #C8C2B8;
-    text-decoration: none;
-}
-
-.task-card + .task-card {
-    margin-top: .6rem;
-}
-
-.task-card-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .4rem;
-    min-width: 48px;
-}
-
-.task-fach-badge {
-    font-size: .72rem;
-    font-weight: 600;
-    padding: .2rem .55rem;
-    border-radius: 20px;
-    background: var(--surface-2);
-    color: var(--text-muted);
-    white-space: nowrap;
-}
-
-.task-card-body {
-    flex: 1;
-}
-
-.task-card-title {
-    font-size: .95rem;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: .2rem;
-}
-
-.task-card-desc {
-    font-size: .82rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.task-card-meta {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-    margin-top: .5rem;
-}
-
-.task-meta-item {
-    font-size: .78rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: .25rem;
-}
-
-.task-card-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: .5rem;
-    min-width: 90px;
-}
-
-.task-date {
-    font-size: .8rem;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    color: var(--text-muted);
-}
-
-/* der linke status einer card in farbe */
-.task-card[data-status="offen"] {
-    border-left: 3px solid var(--warn);
-}
-
-.task-card[data-status="erledigt"] {
-    border-left: 3px solid var(--accent);
-}
-
-.task-card[data-status="neu"] {
-    border-left: 3px solid #5B8DD9;
-}
-
 /* status farb anzeige */
 .badge {
     display: inline-block;
@@ -372,11 +232,6 @@ a:hover {
     border: none;
     border-top: 1px solid var(--border);
     margin: 1.5rem 0;
-}
-
-.table-action-header {
-    background: var(--surface);
-    padding: .85rem 1rem;
 }
 
 /* button formatierungen */
@@ -523,16 +378,6 @@ select {
     min-width: 130px;
 }
 
-/* login */
-.login-page {
-    min-height: 100vh;
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-}
-
 .login-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -555,36 +400,6 @@ select {
 .login-logo em {
     font-style: italic;
     font-weight: 300;
-}
-
-.login-subtitle {
-    text-align: center;
-    font-size: .82rem;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-}
-
-.dashboard-hero {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-}
-
-.dashboard-greeting {
-    font-family: 'Fraunces', serif;
-    font-size: 1.9rem;
-    font-weight: 300;
-}
-
-.dashboard-greeting em {
-    font-style: italic;
-    color: var(--accent);
-}
-
-.dashboard-stats {
-    display: flex;
-    gap: 1rem;
 }
 
 .stats-row {
@@ -884,20 +699,150 @@ table.table .action-btns {
     text-decoration: none;
 }
 
+
+/* dashboard task cards */
+.task-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.task-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: #C8C2B8;
+}
+
+.task-card + .task-card {
+    margin-top: .6rem;
+}
+
+.task-card[data-status="offen"] {
+    border-left: 3px solid var(--warn);
+}
+
+.task-card[data-status="erledigt"] {
+    border-left: 3px solid var(--accent);
+}
+
+.task-card[data-status="rot"] {
+    border-left: 3px solid var(--danger);
+}
+
+.task-fach {
+    font-size: .72rem;
+    font-weight: 600;
+    padding: .2rem .55rem;
+    border-radius: 20px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    white-space: nowrap;
+    min-width: 48px;
+    text-align: center;
+}
+
+.task-body {
+    flex: 1;
+}
+
+.task-title {
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: .2rem;
+}
+
+.task-desc {
+    font-size: .82rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.task-meta {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-top: .5rem;
+    font-size: .78rem;
+    color: var(--text-muted);
+}
+
+.task-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .5rem;
+    min-width: 90px;
+}
+
+.task-date {
+    font-size: .8rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+/* dashboard hero */
+.dash-hero {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+
+.dash-greeting {
+    font-family: 'Fraunces', serif;
+    font-size: 1.9rem;
+    font-weight: 300;
+}
+
+.dash-greeting em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.stat-pills {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+}
+
+.pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: .35rem 1rem;
+    font-size: .82rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    color: var(--text-muted);
+}
+
+.pill strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
 /* responsive */
 @media (max-width: 768px) {
     .main-content {
         padding: 1rem 1rem;
     }
 
-    .dashboard-hero {
-        flex-direction: column;
-        gap: .75rem;
-    }
 
-    .dashboard-greeting {
-        font-size: 1.4rem;
-    }
+
+
 
     .filter-bar {
         flex-direction: column;
@@ -920,9 +865,7 @@ table.table .action-btns {
         display: none;
     }
 
-    .task-card-right {
-        display: none;
-    }
+
 }
 
 /* überschreibt yii2 oder sowas */
