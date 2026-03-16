@@ -374,6 +374,11 @@ a:hover {
     margin: 1.5rem 0;
 }
 
+.table-action-header {
+    background: var(--surface);
+    padding: .85rem 1rem;
+}
+
 /* button formatierungen */
 .btn {
     display: inline-flex;
@@ -582,16 +587,25 @@ select {
     gap: 1rem;
 }
 
+.stats-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
 .stat-pill {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: .35rem 1rem;
     font-size: .82rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: .4rem;
     color: var(--text-muted);
+    width: fit-content;
 }
 
 .stat-pill strong {
@@ -644,6 +658,96 @@ table.table tr:hover td {
 table.table .action-btns {
     display: flex;
     gap: .4rem;
+}
+
+.action-btns-right {
+    justify-content: flex-end;
+}
+
+.col-actions {
+    text-align: right;
+}
+
+.col-id {
+    color: var(--text-muted);
+    font-size: .8rem;
+}
+
+.col-muted {
+    color: var(--text-muted);
+}
+
+.table-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+    border: 1px solid var(--border);
+}
+
+.btn-outline:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    text-decoration: none;
+}
+
+.btn-outline.btn-outline-danger {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-outline.btn-outline-danger:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-outline.btn-outline-accent {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-outline.btn-outline-accent:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-outline.btn-outline-warn {
+    color: var(--warn);
+    border-color: var(--warn);
+}
+
+.btn-outline.btn-outline-warn:hover {
+    background: var(--warn);
+    color: #fff;
+}
+
+/* badge varianten */
+.badge-admin {
+    background: var(--accent-light);
+    color: var(--accent);
+}
+
+.badge-user {
+    background: var(--surface-2);
+    color: var(--text-muted);
+}
+
+/* user tag "(du)" */
+.user-tag {
+    font-size: .72rem;
+    color: var(--text-muted);
+    margin-left: .4rem;
+}
+
+/* select schmal in filter-bar */
+.select-narrow {
+    flex: 0 0 auto;
+    min-width: 140px;
 }
 
 .pagination {
@@ -742,6 +846,12 @@ table.table .action-btns {
 .page-header h1 {
     font-size: 1.75rem;
     font-weight: 300;
+}
+
+.page-header h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-muted);
 }
 
 .page-header .page-actions {

@@ -17,7 +17,7 @@ class FaecherController extends Controller
     public function beforeAction($action)
     {
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
-            $this->layout = 'Admin';
+            $this->layout = '@app/views/layouts/Admin';
         }
         return parent::beforeAction($action);
     }
